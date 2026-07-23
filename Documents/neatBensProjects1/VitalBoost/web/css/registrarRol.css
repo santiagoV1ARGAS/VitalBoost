@@ -1,0 +1,194 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* CONTENEDOR */
+.contenedor-admin {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    background: #0b1220;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right: 1px solid #1f2937;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.menu a {
+    display: block;
+    padding: 12px;
+    margin: 8px 0;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    background: #1f2937;
+    color: #fff;
+}
+
+.menu .activo {
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* CONTENIDO */
+.contenido {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+/* CARD FORM */
+.form-contenedor {
+    background: #111827;
+    padding: 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #1f2937;
+}
+
+.form-contenedor h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* INPUTS */
+.grupo-input {
+    margin-bottom: 18px;
+}
+
+.grupo-input label {
+    display: block;
+    margin-bottom: 6px;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+.grupo-input input,
+.grupo-input textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+
+.grupo-input input:focus,
+.grupo-input textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+/* BOTÓN AGREGAR / GUARDAR */
+.btn-agregar {
+    width: 100%;
+    padding: 12px;
+    background: #2563eb;
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-agregar:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+}
+
+/* TABLA */
+.tabla-roles {
+    margin-top: 40px;
+}
+
+.tabla-roles h2 {
+    color: #ffffff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.tabla-roles table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #111827;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.tabla-roles th {
+    background: #1e293b;
+    color: #38bdf8;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #334155;
+}
+
+.tabla-roles td {
+    padding: 12px;
+    border-bottom: 1px solid #1f2937;
+    color: #e5e7eb;
+}
+
+/* BOTÓN EDITAR */
+.btn-editar {
+    background: #2563eb;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.btn-editar:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .contenido {
+        padding: 20px;
+    }
+
+    .form-contenedor {
+        width: 100%;
+    }
+}

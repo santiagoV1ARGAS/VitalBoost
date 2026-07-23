@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0b1329, #1e293b);
+    min-height: 100vh;
+    color: #ffffff;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.contenedor-admin {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: #0f172a;
+    padding: 20px;
+    border-right: 1px solid #1e293b;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.menu a {
+    display: block;
+    padding: 12px;
+    margin: 8px 0;
+    color: #94a3b8;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.menu .activo {
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* =========================
+   CONTENIDO
+========================= */
+.contenido {
+    flex: 1;
+    padding: 40px;
+}
+
+/* =========================
+   FORMULARIO
+========================= */
+.form-contenedor {
+    background: #111827;
+    padding: 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #1e293b;
+}
+
+.form-contenedor h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.grupo-input {
+    margin-bottom: 15px;
+}
+
+.grupo-input label {
+    display: block;
+    margin-bottom: 6px;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+.grupo-input input,
+.grupo-input textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    background: #0b1329;
+    color: #ffffff;
+    outline: none;
+    transition: 0.3s;
+}
+
+.grupo-input input:focus,
+.grupo-input textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+/* =========================
+   BOTÓN PRINCIPAL
+========================= */
+.btn-agregar {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.25);
+}
+
+.btn-agregar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+/* =========================
+   TABLA
+========================= */
+.tabla-roles {
+    margin-top: 40px;
+}
+
+.tabla-roles h2 {
+    color: #ffffff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.tabla-roles table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #111827;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.tabla-roles th {
+    background: #1e293b;
+    color: #38bdf8;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.tabla-roles td {
+    padding: 12px;
+    border-bottom: 1px solid #1e293b;
+    color: #e5e7eb;
+}
+
+.tabla-roles tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* =========================
+   BOTÓN EDITAR
+========================= */
+.btn-editar {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #ffffff;
+    padding: 7px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.btn-editar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(2, 132, 199, 0.35);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+
+    .contenedor-admin {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        border-right: none;
+        border-bottom: 1px solid #1e293b;
+    }
+
+    .contenido {
+        padding: 20px;
+    }
+
+    .form-contenedor {
+        width: 100%;
+    }
+}

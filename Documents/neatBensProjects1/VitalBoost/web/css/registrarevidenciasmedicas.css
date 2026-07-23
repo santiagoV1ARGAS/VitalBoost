@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #0b1329;
+}
+
+/* CONTENEDOR */
+.contenedor-admin {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #0f172a;
+    padding: 20px;
+    border-right: 1px solid #1e293b;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #94a3b8;
+    padding: 10px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.menu .activo {
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* CONTENIDO */
+.contenido {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* FORM */
+.form-contenedor {
+    width: 100%;
+    max-width: 450px;
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.form-contenedor h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* INPUTS */
+.grupo-input {
+    margin-bottom: 15px;
+}
+
+.grupo-input label {
+    display: block;
+    margin-bottom: 5px;
+    color: #cbd5e1;
+}
+
+.grupo-input input,
+.grupo-input textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #0b1329;
+    color: #ffffff;
+    outline: none;
+    transition: 0.3s;
+}
+
+.grupo-input input:focus,
+.grupo-input textarea:focus {
+    border-color: #3b82f6;
+}
+
+/* BOTÓN */
+.btn-agregar {
+    width: 100%;
+    padding: 12px;
+    background: #2563eb;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-agregar:hover {
+    background: #1d4ed8;
+    box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+}
+
+/* TABLA ROLES */
+.tabla-roles {
+    margin-top: 40px;
+}
+
+.tabla-roles h2 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.tabla-roles table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #111827;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabla-roles th {
+    background: #1e293b;
+    color: #38bdf8;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.tabla-roles td {
+    padding: 10px;
+    color: #e5e7eb;
+    border-bottom: 1px solid #1e293b;
+}
+
+.btn-editar {
+    background: #0284c7;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-editar:hover {
+    background: #0369a1;
+    transform: scale(1.05);
+}
