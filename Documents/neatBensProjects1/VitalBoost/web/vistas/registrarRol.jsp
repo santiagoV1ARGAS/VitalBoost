@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -8,11 +8,15 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Rol</title>
     <link rel="stylesheet" href="${ctx}/css/registrarRol.css">
+    <link rel="stylesheet" href="${ctx}/css/global.css">
 </head>
 
 <body>
+
+<%@ include file="/includes/loader.jspf" %>
 
 <div class="contenedor-admin">
 
@@ -36,6 +40,18 @@
     </aside>
 
     <main class="contenido">
+
+        <c:if test="${mensajeError != null}">
+            <div class="mensaje mensaje-error">
+                ${mensajeError}
+            </div>
+        </c:if>
+
+        <c:if test="${mensajeExito != null}">
+            <div class="mensaje mensaje-exito">
+                ${mensajeExito}
+            </div>
+        </c:if>
 
         <!-- FORMULARIO -->
         <div class="form-contenedor">

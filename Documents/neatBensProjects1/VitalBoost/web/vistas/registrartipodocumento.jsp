@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -7,10 +7,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión Tipo Documento - VitalBoost</title>
     <link rel="stylesheet" href="${ctx}/css/registrartipodocumento.css">
+    <link rel="stylesheet" href="${ctx}/css/global.css">
 </head>
 <body>
+
+<%@ include file="/includes/loader.jspf" %>
 
 <div class="contenedor-admin">
 

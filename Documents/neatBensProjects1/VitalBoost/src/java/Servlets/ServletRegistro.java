@@ -4,8 +4,11 @@ import Controlador.Tipo_DocumentoDAO;
 import Controlador.Tipo_sangreDAO;
 import Controlador.UsuarioDAO;
 import Controlador.RolesDAO;
+import Controlador.ContactoEmergenciaDAO;
 
 import Modelo.Usuario;
+import Modelo.Roles;
+import Modelo.ContactoEmergencia;
 
 import java.io.IOException;
 
@@ -19,12 +22,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ServletRegistro extends HttpServlet {
 
     UsuarioDAO udao = new UsuarioDAO();
+    RolesDAO rdao = new RolesDAO();
+    ContactoEmergenciaDAO cdao = new ContactoEmergenciaDAO();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        System.out.println("🔥 ENTRO AL SERVLET");
 
         request.setCharacterEncoding("UTF-8");
 
@@ -39,11 +42,40 @@ public class ServletRegistro extends HttpServlet {
             String password = request.getParameter("txtPassword");
             String fecha = request.getParameter("txtFecha");
             String alergias = request.getParameter("txtAlergias");
+            String eps = request.getParameter("txtEps");
+            String medicamentos = request.getParameter("txtMedicamentos");
             String numeroDocumento = request.getParameter("txtNumeroDocumento");
 
             String tipoDoc = request.getParameter("txtIdTipoDoc");
             String tipoSangre = request.getParameter("txtIdSangre");
-            String rol = request.getParameter("txtIdRol");
+
+            String nombreContacto = request.getParameter("txtNombreContacto");
+            String parentescoContacto = request.getParameter("txtParentescoContacto");
+            String telefonoContacto = request.getParameter("txtTelefonoContacto");
+
+            // El registro público siempre corresponde al rol Paciente.
+            // El único rol que inicia sesión con credenciales es el Administrador.
+            // Se busca el rol por NOMBRE porque los roles se administran
+            // libremente desde el panel de admin y su id puede variar.
+            Roles rolPaciente = rdao.obtenerPorNombre("Paciente");
+
+            if (rolPaciente == null) {
+
+                request.setAttribute("error",
+                        "No existe un rol 'Paciente' configurado en el sistema. "
+                        + "Contacta al administrador.");
+
+                request.setAttribute("listaDocumentos",
+                        new Tipo_DocumentoDAO().listar());
+
+                request.setAttribute("listaSangres",
+                        new Tipo_sangreDAO().listar());
+
+                request.getRequestDispatcher("/vistas/registro.jsp")
+                        .forward(request, response);
+
+                return;
+            }
 
             boolean hayError = false;
 
@@ -132,13 +164,21 @@ public class ServletRegistro extends HttpServlet {
             }
 
             // =========================
-            // VALIDAR ROL
+            // VALIDAR CONTACTO DE EMERGENCIA
             // =========================
 
-            if (rol == null || rol.isBlank()) {
+            if (nombreContacto == null || nombreContacto.isBlank()) {
 
-                request.setAttribute("errorRol",
-                        "Seleccione un rol.");
+                request.setAttribute("errorNombreContacto",
+                        "El nombre del contacto de emergencia es obligatorio.");
+
+                hayError = true;
+            }
+
+            if (telefonoContacto == null || telefonoContacto.isBlank()) {
+
+                request.setAttribute("errorTelefonoContacto",
+                        "El número de emergencia es obligatorio.");
 
                 hayError = true;
             }
@@ -154,9 +194,6 @@ public class ServletRegistro extends HttpServlet {
 
                 request.setAttribute("listaSangres",
                         new Tipo_sangreDAO().listar());
-
-                request.setAttribute("listaRoles",
-                        new RolesDAO().listar());
 
                 request.getRequestDispatcher("/vistas/registro.jsp")
                         .forward(request, response);
@@ -175,12 +212,14 @@ public class ServletRegistro extends HttpServlet {
             u.setPassword(password);
             u.setFecha_nacimiento(fecha);
             u.setAlergias_conocidas(alergias);
+            u.setEps(eps);
+            u.setMedicamentos_actuales(medicamentos);
             u.setNumero_documento(numeroDocumento);
 
             u.setId_tipo_documento(Integer.parseInt(tipoDoc));
             u.setId_tipo_sangre(Integer.parseInt(tipoSangre));
 
-            u.setId_rol(Integer.parseInt(rol));
+            u.setId_rol(rolPaciente.getId_rol());
 
             // =========================
             // INSERTAR
@@ -190,10 +229,49 @@ public class ServletRegistro extends HttpServlet {
 
             if (r > 0) {
 
-                response.sendRedirect(
-                        request.getContextPath()
-                        + "/vistas/dashboard.jsp"
-                );
+                // ==================================================
+                // GUARDAR CONTACTO DE EMERGENCIA
+                //
+                // Se busca el usuario recién creado por su número de
+                // documento (único) para obtener su id_usuario, ya que
+                // el INSERT no retorna la llave generada.
+                // ==================================================
+                Usuario pacienteCreado = udao.buscarPorDocumento(numeroDocumento);
+
+                if (pacienteCreado != null) {
+                    ContactoEmergencia contacto = new ContactoEmergencia();
+                    contacto.setId_usuario(pacienteCreado.getId_usuario());
+                    contacto.setNombre_contacto(nombreContacto);
+                    contacto.setParentesco(parentescoContacto);
+                    contacto.setTelefono(telefonoContacto);
+
+                    cdao.agregar(contacto);
+                }
+
+                // ==================================================
+                // REGISTRO EXITOSO: en vez de iniciar sesión, se
+                // genera el enlace/QR de la Hoja de Vida de emergencia.
+                // El paciente NO necesita volver a iniciar sesión;
+                // basta con guardar/escanear su código QR.
+                // ==================================================
+
+                String urlBase = request.getScheme() + "://"
+                        + request.getServerName()
+                        + ":" + request.getServerPort()
+                        + request.getContextPath();
+
+                String urlHojaVida = urlBase + "/HojaVidaPublica?doc="
+                        + java.net.URLEncoder.encode(numeroDocumento, "UTF-8");
+
+                String qrImageUrl = "https://api.qrserver.com/v1/create-qr-code/?size=260x260&data="
+                        + java.net.URLEncoder.encode(urlHojaVida, "UTF-8");
+
+                request.setAttribute("nombrePaciente", nombre);
+                request.setAttribute("urlHojaVida", urlHojaVida);
+                request.setAttribute("qrImageUrl", qrImageUrl);
+
+                request.getRequestDispatcher("/vistas/registroExitoso.jsp")
+                        .forward(request, response);
 
             } else {
 
@@ -206,16 +284,12 @@ public class ServletRegistro extends HttpServlet {
                 request.setAttribute("listaSangres",
                         new Tipo_sangreDAO().listar());
 
-                request.setAttribute("listaRoles",
-                        new RolesDAO().listar());
-
                 request.getRequestDispatcher("/vistas/registro.jsp")
                         .forward(request, response);
             }
 
         } catch (Exception e) {
 
-            System.out.println("🔥 ERROR REGISTRO:");
             e.printStackTrace();
 
             request.setAttribute("error", e.getMessage());
@@ -225,9 +299,6 @@ public class ServletRegistro extends HttpServlet {
 
             request.setAttribute("listaSangres",
                     new Tipo_sangreDAO().listar());
-
-            request.setAttribute("listaRoles",
-                    new RolesDAO().listar());
 
             request.getRequestDispatcher("/vistas/registro.jsp")
                     .forward(request, response);
@@ -243,9 +314,6 @@ public class ServletRegistro extends HttpServlet {
 
         request.setAttribute("listaSangres",
                 new Tipo_sangreDAO().listar());
-
-        request.setAttribute("listaRoles",
-                new RolesDAO().listar());
 
         request.getRequestDispatcher("/vistas/registro.jsp")
                 .forward(request, response);

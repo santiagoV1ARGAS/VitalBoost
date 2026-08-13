@@ -23,7 +23,7 @@ public class ServletCerrarSesion extends HttpServlet {
         }
         
         // 3. Redirigir al login después de limpiar la sesión
-        response.sendRedirect("vistas/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/ServletLogin");
     }
 
     @Override

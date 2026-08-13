@@ -1,303 +1,541 @@
-/* ========================= */
-/* FUENTE */
-/* ========================= */
+/* =====================================================================
+   VITALBOOST · REGISTRO.CSS — Alineado al sistema de diseño de
+   index.css / login.css. Misma paleta, tipografía (Manrope/Sora),
+   gradientes, blobs animados e iconografía, aplicados a la vista de
+   registro (formulario de 3 pasos con progreso dinámico).
+   ===================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap');
 
-/* ========================= */
-/* VARIABLES */
-/* ========================= */
-
-:root {
-
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-
-    --background-color: #f4f7fb;
-    --card-color: #ffffff;
-
-    --text-dark: #111827;
-    --text-muted: #6b7280;
-
-    --border-color: #dbe2ea;
-
-    --error-color: #dc2626;
-    --success-color: #16a34a;
-
-    --shadow:
-        0 10px 30px rgba(0, 0, 0, 0.06);
-
+:root{
+    --ib-azul-900:#0a1230;
+    --ib-azul-700:#13245c;
+    --ib-azul-600:#1d3fd6;
+    --ib-azul-500:#2f5bff;
+    --ib-azul-400:#5c8bff;
+    --ib-azul-100:#e5edff;
+    --ib-azul-50: #f2f6ff;
+    --ib-cian:    #23d3d3;
+    --ib-verde:   #17c993;
+    --ib-rosa:    #ff5f9e;
+    --ib-texto:   #16203f;
+    --ib-texto-suave:#5a6584;
+    --ib-borde:   #e6ebf7;
+    --ib-radius:  20px;
+    --ib-sombra:  0 10px 30px rgba(19,36,92,.10);
+    --ib-sombra-fuerte: 0 24px 60px rgba(19,36,92,.20);
 }
 
-/* ========================= */
-/* RESET */
-/* ========================= */
-
-* {
-
+*{
     margin: 0;
     padding: 0;
-
     box-sizing: border-box;
+    font-family: 'Manrope', Arial, Helvetica, sans-serif;
 }
 
-/* ========================= */
-/* BODY */
-/* ========================= */
-
-body {
-
-    font-family: 'Inter', sans-serif;
-
-    background:
-        linear-gradient(
-            135deg,
-            #eef4ff 0%,
-            #f8fbff 100%
-        );
-
+body{
+    background: var(--ib-azul-50);
+    color: var(--ib-texto);
     min-height: 100vh;
+}
 
+h1, h2{ font-family: 'Sora', 'Manrope', sans-serif; }
+
+::selection{ background: var(--ib-azul-500); color:#fff; }
+
+/* =====================================================================
+   CONTENEDOR PRINCIPAL
+   ===================================================================== */
+.main-container{
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =====================================================================
+   PANEL IZQUIERDO — mismo lenguaje visual que login: fondo degradado
+   oscuro, textura de puntos y blobs flotantes animados. Se queda fijo
+   mientras el panel derecho hace scroll con el formulario.
+   ===================================================================== */
+.left-panel{
+    flex: 0 0 42%;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px;
+    overflow: hidden;
+    background: radial-gradient(circle at 15% 20%, var(--ib-azul-700), var(--ib-azul-900) 60%);
+    color: #fff;
+}
+
+.left-panel::before{
+    content:"";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.09) 1.4px, transparent 1.4px);
+    background-size: 26px 26px;
+    opacity: .5;
+}
+
+.left-panel::after{
+    content:"";
+    position: absolute;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    filter: blur(10px);
+    opacity: .35;
+    background: radial-gradient(circle at 30% 30%, var(--ib-cian), transparent 70%);
+    bottom: -120px; left: -80px;
+    animation: flotar 9s ease-in-out infinite;
+}
+
+.left-panel .blob-extra{
+    position: absolute;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    filter: blur(10px);
+    opacity: .28;
+    background: radial-gradient(circle at 30% 30%, var(--ib-rosa), transparent 70%);
+    top: -60px; right: -60px;
+    animation: flotar 11s ease-in-out infinite reverse;
+}
+
+@keyframes flotar{
+    0%, 100%{ transform: translateY(0) scale(1); }
+    50%{ transform: translateY(-25px) scale(1.06); }
+}
+
+.left-logo{
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 44px;
+    width: fit-content;
+}
+
+.left-logo .logo-icono{
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--ib-azul-500), var(--ib-cian));
+    box-shadow: 0 6px 16px rgba(47,91,255,.35);
+    flex-shrink: 0;
+}
+.left-logo .logo-icono svg{ width: 22px; height: 22px; stroke: #fff; }
+
+.left-logo span{
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+.left-logo span b{ font-weight: 800; }
+
+.left-content{
+    position: relative;
+    z-index: 1;
+    max-width: 460px;
+}
+
+.left-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.18);
+    padding: 8px 16px 8px 10px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #fff;
+    backdrop-filter: blur(6px);
+    margin-bottom: 22px;
+}
+.left-badge .punto{
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ib-verde);
+    box-shadow: 0 0 0 0 rgba(23,201,147,.6);
+    animation: pulso 2s infinite;
+}
+@keyframes pulso{
+    0%{ box-shadow: 0 0 0 0 rgba(23,201,147,.6); }
+    70%{ box-shadow: 0 0 0 8px rgba(23,201,147,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(23,201,147,0); }
+}
+
+.left-content h1{
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+}
+.left-content h1 span{
+    background: linear-gradient(90deg, var(--ib-azul-400), var(--ib-cian));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.left-content p{
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,.75);
+    margin-bottom: 32px;
+}
+
+/* =====================================================================
+   PASOS DINÁMICOS — se iluminan según la sección visible del form
+   ===================================================================== */
+.left-steps{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.paso{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px;
+    padding: 13px 16px;
+    backdrop-filter: blur(6px);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), background .35s ease, border-color .35s ease;
+}
+
+.paso-num{
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    background: rgba(255,255,255,.1);
+    color: rgba(255,255,255,.65);
+    border: 1.5px solid rgba(255,255,255,.2);
+    transition: all .35s ease;
+}
+
+.paso-texto{ display: flex; flex-direction: column; gap: 1px; }
+.paso-texto strong{ font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,.9); }
+.paso-texto small{ font-size: 11.5px; color: rgba(255,255,255,.5); }
+
+.paso.activo{
+    background: rgba(255,255,255,.11);
+    border-color: rgba(92,139,255,.55);
+    transform: translateX(6px);
+}
+.paso.activo .paso-num{
+    background: linear-gradient(135deg, var(--ib-azul-500), var(--ib-cian));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 0 0 4px rgba(47,91,255,.18);
+}
+
+.paso.completo .paso-num{
+    background: var(--ib-verde);
+    border-color: transparent;
+    color: #fff;
+}
+.paso.completo .paso-num::after{ content:"✓"; }
+.paso.completo:not(.activo) .paso-num{ font-size: 0; }
+.paso.completo:not(.activo) .paso-num::after{ font-size: 14px; }
+
+/* =====================================================================
+   BARRA DE PROGRESO GENERAL — se llena en vivo con JS
+   ===================================================================== */
+.left-progreso{
+    position: relative;
+    z-index: 1;
+}
+
+.left-progreso-barra{
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.12);
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.left-progreso-fill{
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--ib-cian), var(--ib-verde));
+    transition: width .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.left-progreso span{
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,.7);
+}
+
+/* =====================================================================
+   PANEL DERECHO — tarjeta de registro (formulario largo con scroll)
+   ===================================================================== */
+.right-panel{
+    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-
-    padding: 2rem;
+    padding: 56px 40px;
+    background: var(--ib-azul-50);
 }
 
-/* ========================= */
-/* FORM CONTAINER */
-/* ========================= */
-
-.form-wrapper {
-
+.registro-card{
     width: 100%;
-    max-width: 560px;
-
-    background-color: var(--card-color);
-
-    border-radius: 20px;
-
-    padding: 2.5rem;
-
-    box-shadow: var(--shadow);
-
-    border: 1px solid #edf1f7;
+    max-width: 620px;
 }
 
-/* ========================= */
-/* HEADER */
-/* ========================= */
+.registro-header{ margin-bottom: 26px; }
 
-.form-header {
-
-    text-align: center;
-
-    margin-bottom: 2rem;
+.registro-header h2{
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    color: var(--ib-texto);
+    margin-bottom: 6px;
 }
 
-.form-header h2 {
+.registro-header p{
+    color: var(--ib-texto-suave);
+    font-size: 14.5px;
+}
 
-    font-size: 2rem;
+/* =====================================================================
+   MENSAJES GENERALES
+   ===================================================================== */
+.msg-box{
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-size: 13.5px;
     font-weight: 700;
+    margin-bottom: 22px;
+}
+.msg-box.error{ background: #fef2f2; color: #dc2626; border: 1.5px solid #fecaca; }
+.msg-box.success{ background: #ecfdf5; color: #16a34a; border: 1.5px solid #a7f3d0; }
 
-    color: var(--text-dark);
+/* =====================================================================
+   SECCIONES DEL FORMULARIO — misma tarjeta blanca que login-card
+   ===================================================================== */
+.form-section{
+    background: #fff;
+    border: 1px solid var(--ib-borde);
+    border-radius: var(--ib-radius);
+    box-shadow: var(--ib-sombra);
+    padding: 32px 32px 28px;
+    margin-bottom: 26px;
+    scroll-margin-top: 24px;
+    transition: box-shadow .3s ease, transform .3s ease;
+}
+.form-section:hover{ box-shadow: var(--ib-sombra-fuerte); }
 
-    margin-bottom: .5rem;
+.form-section.highlight{
+    border-color: rgba(47,91,255,.25);
+    background: linear-gradient(180deg, #fff, var(--ib-azul-50) 180%);
 }
 
-.form-header p {
-
-    font-size: .95rem;
-
-    color: var(--text-muted);
+.form-section legend{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ib-texto);
+    margin-bottom: 22px;
+    padding: 0;
 }
 
-/* ========================= */
-/* MENSAJES */
-/* ========================= */
-
-.error-box {
-
-    background-color: #fee2e2;
-
-    color: var(--error-color);
-
-    padding: .9rem 1rem;
-
-    border-radius: 10px;
-
-    font-size: .9rem;
-
-    margin-bottom: 1rem;
+.section-num{
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg, var(--ib-azul-500), var(--ib-azul-600));
+    box-shadow: 0 6px 14px rgba(47,91,255,.35);
 }
 
-.success-box {
-
-    background-color: #dcfce7;
-
-    color: var(--success-color);
-
-    padding: .9rem 1rem;
-
-    border-radius: 10px;
-
-    font-size: .9rem;
-
-    margin-bottom: 1rem;
+.section-hint{
+    font-size: 13px;
+    color: var(--ib-texto-suave);
+    margin: -12px 0 20px;
+    line-height: 1.6;
 }
 
-/* ========================= */
-/* CAMPOS */
-/* ========================= */
-
-.form-field {
-
-    margin-bottom: 1.4rem;
+/* =====================================================================
+   CAMPOS
+   ===================================================================== */
+.form-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
 }
 
-.form-field label {
+.form-field{ margin-bottom: 18px; }
+.form-row .form-field{ margin-bottom: 0; }
 
+.form-field label{
     display: block;
-
-    margin-bottom: .5rem;
-
-    font-size: .9rem;
-    font-weight: 600;
-
-    color: var(--text-dark);
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ib-texto);
 }
-
-/* ========================= */
-/* INPUTS */
-/* ========================= */
 
 .form-field input,
 .form-field select,
-.form-field textarea {
-
+.form-field textarea{
     width: 100%;
-
-    border: 1.5px solid var(--border-color);
-
+    padding: 13px 16px;
     border-radius: 12px;
-
-    padding: .85rem 1rem;
-
-    font-size: .95rem;
-
-    background-color: #fff;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease;
-
-    outline: none;
+    border: 1.5px solid var(--ib-borde);
+    font-size: 15px;
+    font-family: 'Manrope', sans-serif;
+    color: var(--ib-texto);
+    background: #fff;
+    transition: all .25s ease;
 }
 
-/* ========================= */
-/* FOCUS */
-/* ========================= */
+.form-field textarea{ resize: vertical; min-height: 90px; }
+
+.form-field input::placeholder,
+.form-field textarea::placeholder{ color: #9aa3bd; }
 
 .form-field input:focus,
 .form-field select:focus,
-.form-field textarea:focus {
-
-    border-color: var(--primary-color);
-
-    box-shadow:
-        0 0 0 4px rgba(37, 99, 235, 0.10);
+.form-field textarea:focus{
+    outline: none;
+    border-color: var(--ib-azul-500);
+    box-shadow: 0 0 0 4px rgba(47,91,255,.10);
 }
 
-/* ========================= */
-/* TEXTAREA */
-/* ========================= */
-
-.form-field textarea {
-
-    resize: vertical;
-
-    min-height: 100px;
+.form-field input:valid:not(:placeholder-shown){
+    border-color: rgba(23,201,147,.5);
 }
 
-/* ========================= */
-/* PLACEHOLDER */
-/* ========================= */
-
-.form-field input::placeholder,
-.form-field textarea::placeholder {
-
-    color: #9ca3af;
-}
-
-/* ========================= */
-/* ERRORES */
-/* ========================= */
-
-.error-message {
-
-    margin-top: .45rem;
-
-    font-size: .82rem;
-
-    color: var(--error-color);
-}
-
-/* ========================= */
-/* BOTON */
-/* ========================= */
-
-.form-submit {
-
-    width: 100%;
-
-    border: none;
-
-    background-color: var(--primary-color);
-
-    color: #ffffff;
-
-    padding: 1rem;
-
-    border-radius: 12px;
-
-    font-size: .95rem;
+/* mensajes de error */
+.msg.error{
+    display: block;
+    margin-top: 6px;
+    color: #dc2626;
+    font-size: 13px;
     font-weight: 600;
+}
 
+/* =====================================================================
+   MEDIDOR DE FUERZA DE CONTRASEÑA — dinámico con JS
+   ===================================================================== */
+.fuerza-clave{
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+.fuerza-clave span{
+    flex: 1;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--ib-borde);
+    transition: background .3s ease;
+}
+.fuerza-clave span.activa.debil{ background: #f59e0b; }
+.fuerza-clave span.activa.media{ background: var(--ib-azul-500); }
+.fuerza-clave span.activa.fuerte{ background: var(--ib-verde); }
+
+/* =====================================================================
+   BOTÓN DE ENVÍO — mismo estilo que .btn-ingresar del login
+   ===================================================================== */
+.btn-ingresar{
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 20px;
+    margin-top: 4px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--ib-azul-500), var(--ib-azul-600));
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    font-size: 15.5px;
+    font-weight: 700;
     cursor: pointer;
-
-    transition:
-        background-color .2s ease,
-        transform .2s ease;
-
-    margin-top: 1rem;
+    box-shadow: 0 12px 28px rgba(47,91,255,.4);
+    transition: all .3s cubic-bezier(.2,.8,.2,1);
+}
+.btn-ingresar svg{ width: 18px; height: 18px; }
+.btn-ingresar:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 18px 34px rgba(47,91,255,.5);
 }
 
-.form-submit:hover {
+/* =====================================================================
+   PIE — enlace a login (usa .footer-link de global.css)
+   ===================================================================== */
+.footer-link{ text-align: center; }
 
-    background-color: var(--primary-hover);
-
-    transform: translateY(-1px);
+.footer-link p{
+    color: var(--ib-texto-suave);
+    font-size: 13.5px;
+    margin-bottom: 6px;
 }
 
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
+/* =====================================================================
+   RESPONSIVE
+   ===================================================================== */
+@media (max-width: 980px){
 
-@media (max-width: 768px) {
+    .main-container{ flex-direction: column; }
 
-    body {
-
-        padding: 1rem;
+    .left-panel{
+        position: relative;
+        flex: none;
+        height: auto;
+        min-height: 320px;
+        padding: 40px 32px;
     }
 
-    .form-wrapper {
+    .left-logo{ margin-bottom: 26px; }
 
-        padding: 2rem 1.3rem;
-    }
+    .left-content h1{ font-size: 28px; }
 
-    .form-header h2 {
+    .left-steps{ display: none; }
 
-        font-size: 1.7rem;
-    }
+    .left-progreso{ max-width: 320px; }
+}
+
+@media (max-width: 640px){
+
+    .form-row{ grid-template-columns: 1fr; }
+
+    .right-panel{ padding: 32px 18px; }
+
+    .form-section{ padding: 24px 20px; }
+
+    .left-panel{ padding: 32px 22px; min-height: 260px; }
+
+    .left-content h1{ font-size: 24px; }
+
+    .left-content p{ font-size: 14px; margin-bottom: 22px; }
 }

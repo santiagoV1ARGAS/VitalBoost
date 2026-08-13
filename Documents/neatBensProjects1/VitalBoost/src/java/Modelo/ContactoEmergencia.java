@@ -7,6 +7,7 @@ public class ContactoEmergencia {
     private String nombre_contacto;
     private String parentesco;
     private String telefono;
+    private String nombreUsuario;
 
     public int getId_contacto() {
         return id_contacto;
@@ -46,6 +47,14 @@ public class ContactoEmergencia {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
 }

@@ -20,11 +20,49 @@ public class ContactoEmergenciaDAO {
 
         List<ContactoEmergencia> lista = new ArrayList<>();
 
-        String sql = "SELECT * FROM Contactos_emergencia";
+        String sql = "SELECT ce.*, u.nombre_completo AS nombre_usuario "
+                + "FROM Contactos_emergencia ce "
+                + "JOIN Usuarios u ON ce.id_usuario = u.id_usuario";
 
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                ContactoEmergencia c = new ContactoEmergencia();
+
+                c.setId_contacto(rs.getInt("id_contacto"));
+                c.setId_usuario(rs.getInt("id_usuario"));
+                c.setNombre_contacto(rs.getString("nombre_contacto"));
+                c.setParentesco(rs.getString("parentesco"));
+                c.setTelefono(rs.getString("telefono"));
+                c.setNombreUsuario(rs.getString("nombre_usuario"));
+
+                lista.add(c);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error listar contactos: " + e.getMessage());
+        } finally {
+            cerrar();
+        }
+
+        return lista;
+    }
+
+    // LISTAR POR USUARIO (para mostrar en la hoja de vida médica)
+    public List<ContactoEmergencia> listarPorUsuario(int idUsuario) {
+
+        List<ContactoEmergencia> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM Contactos_emergencia WHERE id_usuario = ?";
+
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idUsuario);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -41,7 +79,7 @@ public class ContactoEmergenciaDAO {
             }
 
         } catch (Exception e) {
-            System.out.println("Error listar contactos: " + e.getMessage());
+            System.out.println("Error listar contactos por usuario: " + e.getMessage());
         } finally {
             cerrar();
         }

@@ -40,12 +40,58 @@ public class Servletlistarusuario extends HttpServlet {
         switch (accion) {
 
             // =========================
-            // LISTAR USUARIOS
+            // LISTAR USUARIOS (DASHBOARD)
             // =========================
 
             case "listar":
 
-                listarUsuarios(request, response);
+                listarUsuarios(request, response, "/vistas/dashboardAdmin.jsp");
+
+                break;
+
+            // =========================
+            // LISTAR USUARIOS (CONFIGURACIÓN DEL SISTEMA)
+            // =========================
+
+            case "listarConfig":
+
+                listarUsuarios(request, response, "/vistas/configuracion.jsp");
+
+                break;
+
+            // =========================
+            // DESACTIVAR USUARIO (BORRADO LÓGICO)
+            // =========================
+
+            case "eliminar":
+
+                try {
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    dao.desactivar(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                response.sendRedirect(request.getContextPath()
+                        + "/Servletlistarusuario?accion=" + accionRetorno(request));
+
+                break;
+
+            // =========================
+            // ACTIVAR USUARIO
+            // =========================
+
+            case "activar":
+
+                try {
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    dao.activar(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                response.sendRedirect(request.getContextPath()
+                        + "/Servletlistarusuario?accion=" + accionRetorno(request));
 
                 break;
 
@@ -55,7 +101,7 @@ public class Servletlistarusuario extends HttpServlet {
 
             default:
 
-                listarUsuarios(request, response);
+                listarUsuarios(request, response, "/vistas/dashboardAdmin.jsp");
 
                 break;
         }
@@ -63,11 +109,28 @@ public class Servletlistarusuario extends HttpServlet {
     }
 
     // =========================
+    // DETERMINA A DÓNDE VOLVER (DASHBOARD O CONFIGURACIÓN)
+    // SEGÚN EL PARÁMETRO "origen" QUE ENVÍA EL BOTÓN
+    // =========================
+
+    private String accionRetorno(HttpServletRequest request) {
+
+        String origen = request.getParameter("origen");
+
+        if ("config".equalsIgnoreCase(origen)) {
+            return "listarConfig";
+        }
+
+        return "listar";
+    }
+
+    // =========================
     // MÉTODO LISTAR
     // =========================
 
     private void listarUsuarios(HttpServletRequest request,
-                                HttpServletResponse response)
+                                HttpServletResponse response,
+                                String vistaDestino)
 
             throws ServletException, IOException {
 
@@ -96,7 +159,7 @@ public class Servletlistarusuario extends HttpServlet {
         // =========================
 
         request.getRequestDispatcher(
-            "/vistas/dashboardAdmin.jsp"
+            vistaDestino
         ).forward(request, response);
 
     }

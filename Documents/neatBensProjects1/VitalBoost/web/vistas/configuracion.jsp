@@ -1,6 +1,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -10,6 +11,7 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         Configuración
@@ -18,9 +20,15 @@
     <link rel="stylesheet"
           href="${ctx}/css/configuracion.css">
 
+    <link rel="stylesheet"
+          href="${ctx}/css/dashboardAdmin.css">
+    <link rel="stylesheet" href="${ctx}/css/global.css">
+
 </head>
 
 <body>
+
+<%@ include file="/includes/loader.jspf" %>
 
 <div class="contenedor-admin">
 
@@ -34,7 +42,7 @@
         <nav class="menu">
 
             <a href="${ctx}/Servletlistarusuario?accion=listar">
-                Dashboard
+                Usuarios
             </a>
 
             <a href="${ctx}/vistas/configuracion.jsp"
@@ -67,7 +75,7 @@
                 </p>
 
                 <a class="btn-config"
-                   href="${ctx}/vistas/registrarRol.jsp">
+                   href="${ctx}/ServletregistrarRol">
 
                     Registrar Rol
 
@@ -85,117 +93,9 @@
                 </p>
 
                 <a class="btn-config"
-                   href="${ctx}/vistas/registrarcontactoemergencia.jsp">
+                   href="${ctx}/Servletregistrarcontactoemergencia">
 
                     Registrar Contacto
-
-                </a>
-
-            </div>
-
-            <!-- EVIDENCIAS MEDICAS -->
-            <div class="card-config">
-
-                <h2>Evidencias Médicas</h2>
-
-                <p>
-                    Gestión de archivos médicos de usuarios
-                </p>
-
-                <a class="btn-config"
-                   href="${ctx}/vistas/registrarevidenciasmedicas.jsp">
-
-                    Registrar Evidencia
-
-                </a>
-
-            </div>
-
-            <!-- HISTORIAL MEDICO -->
-            <div class="card-config">
-
-                <h2>Historial Médico</h2>
-
-                <p>
-                    Registro de antecedentes clínicos
-                </p>
-
-                <a class="btn-config"
-                   href="${ctx}/vistas/registrarhistorialmedico.jsp">
-
-                    Registrar Historial
-
-                </a>
-
-            </div>
-
-            <!-- CENTROS MEDICOS -->
-            <div class="card-config">
-
-                <h2>Centros Médicos</h2>
-
-                <p>
-                    Gestión de hospitales y clínicas
-                </p>
-
-                <a class="btn-config"
-                   href="${ctx}/vistas/registrarcentromedico.jsp">
-
-                    Registrar Centro
-
-                </a>
-
-            </div>
-
-            <!-- MEDICAMENTOS -->
-            <div class="card-config">
-
-                <h2>Medicamentos</h2>
-
-                <p>
-                    Gestión de medicamentos médicos
-                </p>
-
-                <a class="btn-config"
-                   href="${ctx}/vistas/registrarmedicamentos.jsp">
-
-                    Registrar Medicamento
-
-                </a>
-
-            </div>
-
-            <!-- TOMA MEDICAMENTOS -->
-            <div class="card-config">
-
-                <h2>Registro Medicamentos</h2>
-
-                <p>
-                    Gestión de tomas de medicamentos
-                </p>
-
-                <a class="btn-config"
-                   href="${ctx}/vistas/registrartomamedicamento.jsp">
-
-                    Registrar Toma
-
-                </a>
-
-            </div>
-
-            <!-- SIGNOS VITALES -->
-            <div class="card-config">
-
-                <h2>Signos Vitales</h2>
-
-                <p>
-                    Gestión de signos vitales clínicos
-                </p>
-
-                <a class="btn-config"
-                   href="${ctx}/vistas/registrarsignosvitales.jsp">
-
-                    Registrar Signos
 
                 </a>
 
@@ -211,7 +111,7 @@
                 </p>
 
                 <a class="btn-config"
-                   href="${ctx}/vistas/registrartipodocumento.jsp">
+                   href="${ctx}/Servletregistrartipodocumento">
 
                     Registrar Tipo
 
@@ -229,27 +129,9 @@
                 </p>
 
                 <a class="btn-config"
-                   href="${ctx}/vistas/registrartiposangre.jsp">
+                   href="${ctx}/Servletregistrartiposangre">
 
                     Registrar Tipo
-
-                </a>
-
-            </div>
-
-            <!-- TRIAJE -->
-            <div class="card-config">
-
-                <h2>Triaje Inicial</h2>
-
-                <p>
-                    Gestión de evaluaciones iniciales
-                </p>
-
-                <a class="btn-config"
-                   href="${ctx}/vistas/registrartriaje.jsp">
-
-                    Registrar Triaje
 
                 </a>
 
@@ -265,9 +147,17 @@
                 </p>
 
                 <a class="btn-config"
-                   href="${ctx}/vistas/registrarusuario.jsp">
+                   href="${ctx}/Servletregistrarusuario">
 
                     Registrar Usuario
+
+                </a>
+
+                <a class="btn-config"
+                   style="margin-top: 8px;"
+                   href="${ctx}/Servletlistarusuario?accion=listarConfig">
+
+                    Activar / Desactivar Usuarios
 
                 </a>
 
@@ -275,7 +165,144 @@
 
         </div>
 
+        <!-- =====================================
+             GESTIÓN DE USUARIOS (ACTIVAR / DESACTIVAR)
+             Solo se muestra cuando se entra por
+             "Activar / Desactivar Usuarios"
+        ====================================== -->
+
+        <c:if test="${not empty listaUsuarios}">
+
+            <section class="tabla-contenedor" style="margin-top: 25px;">
+
+                <div class="tabla-header">
+
+                    <div>
+                        <h2>Usuarios Registrados</h2>
+                        <p class="descripcion-tabla">
+                            Activa o desactiva usuarios desde Configuración del Sistema
+                        </p>
+                    </div>
+
+                    <a href="${ctx}/Servletregistrarusuario" class="btn-agregar">
+                        + Nuevo Usuario
+                    </a>
+
+                </div>
+
+                <div class="tabla-responsive">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Documento</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <c:choose>
+
+                                <c:when test="${not empty listaUsuarios}">
+
+                                    <c:forEach var="u" items="${listaUsuarios}">
+
+                                        <tr>
+
+                                            <td>${u.nombre_completo}</td>
+                                            <td>${u.email}</td>
+                                            <td>${u.numero_documento}</td>
+                                            <td>${u.nombreRol}</td>
+
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${u.activo == 0}">
+                                                        <span class="badge-inactivo">Inactivo</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="badge-activo">Activo</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+
+                                            <td>
+                                                <div class="acciones">
+
+                                                    <c:choose>
+                                                        <c:when test="${u.activo == 0}">
+                                                            <a href="javascript:void(0);"
+                                                               class="btn-editar"
+                                                               onclick="confirmarAccion('${ctx}/Servletlistarusuario?accion=activar&id=${u.id_usuario}&origen=config', '¿Activar nuevamente a este usuario?')">
+
+                                                                Activar
+
+                                                            </a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="javascript:void(0);"
+                                                               class="btn-eliminar"
+                                                               onclick="confirmarAccion('${ctx}/Servletlistarusuario?accion=eliminar&id=${u.id_usuario}&origen=config', '¿Desactivar a este usuario? Podrás reactivarlo luego.')">
+
+                                                                Desactivar
+
+                                                            </a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+
+                                                    <c:if test="${fn:toLowerCase(u.nombreRol) == 'paciente'}">
+                                                        <a href="${ctx}/HojaVidaPublica?doc=${u.numero_documento}"
+                                                           class="btn-perfil"
+                                                           target="_blank">
+
+                                                            Ver QR
+
+                                                        </a>
+                                                    </c:if>
+
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    </c:forEach>
+
+                                </c:when>
+
+                                <c:otherwise>
+                                    <tr>
+                                        <td colspan="6" class="sin-registros">
+                                            No hay usuarios registrados
+                                        </td>
+                                    </tr>
+                                </c:otherwise>
+
+                            </c:choose>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </c:if>
+
     </main>
+
+    <script>
+        function confirmarAccion(url, mensaje) {
+            if (confirm(mensaje)) {
+                window.location.href = url;
+            }
+        }
+    </script>
 
 </div>
 

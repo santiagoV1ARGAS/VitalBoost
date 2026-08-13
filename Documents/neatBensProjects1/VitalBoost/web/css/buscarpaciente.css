@@ -4,8 +4,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 24px 16px;
 }
 
 .search-card {
@@ -85,4 +86,10 @@ button:hover {
 
 .back-link:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .search-card {
+        padding: 22px;
+    }
 }

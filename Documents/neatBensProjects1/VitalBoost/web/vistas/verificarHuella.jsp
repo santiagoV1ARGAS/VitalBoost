@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -10,8 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validación Biométrica - VitalBoost</title>
     <link rel="stylesheet" href="${ctx}/css/verificarHuella.css">
+    <link rel="stylesheet" href="${ctx}/css/global.css">
 </head>
 <body>
+
+<%@ include file="/includes/loader.jspf" %>
 
 <div class="biometric-card">
     <div class="alert-icon">🔒</div>

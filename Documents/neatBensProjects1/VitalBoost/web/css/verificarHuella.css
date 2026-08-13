@@ -4,8 +4,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 24px 16px;
 }
 
 .biometric-card {
@@ -88,4 +89,10 @@ body {
 
 .cancel-link:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .biometric-card {
+        padding: 24px;
+    }
 }

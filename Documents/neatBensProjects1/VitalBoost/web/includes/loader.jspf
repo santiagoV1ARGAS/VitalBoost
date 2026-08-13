@@ -1,0 +1,26 @@
+<%-- =====================================================================
+     VITALBOOST · LOADER.JSPF — Overlay de carga reutilizable.
+     Inclúyelo justo después de <body> en cualquier página:
+
+         <%@ include file="/includes/loader.jspf" %>
+
+     Requiere que la página ya tenga cargado ${ctx} (contextPath) como
+     variable de EL, por eso arma su propia ruta con pageContext
+     directamente y no depende de que la página lo haya definido.
+     ===================================================================== --%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/loader.css">
+
+<div id="vb-loader">
+    <div class="vb-loader-caja">
+        <div class="vb-loader-anillo"></div>
+        <div class="vb-loader-logo">
+            <svg viewBox="0 0 24 24">
+                <path d="M20.8 6.6c-1.8-3.4-6.2-4.2-8.8-1.6l-.9.9-.9-.9C7.6 2.4 3.2 3.2 1.4 6.6c-1.5 2.9-.7 6.4 1.9 9l7.7 7.6 7.7-7.6c2.6-2.6 3.4-6.1 1.9-9z"/>
+                <path d="M6 12h3l1.5-3 2 6 1.5-3H18"/>
+            </svg>
+        </div>
+        <span class="vb-loader-texto vb-loader-puntos">Cargando</span>
+    </div>
+</div>
+
+<script src="${pageContext.request.contextPath}/js/loader.js"></script>

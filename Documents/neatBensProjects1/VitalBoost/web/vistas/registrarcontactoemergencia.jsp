@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -8,11 +8,15 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto Emergencia</title>
     <link rel="stylesheet" href="${ctx}/css/registrarcontactoemergencia.css">
+    <link rel="stylesheet" href="${ctx}/css/global.css">
 </head>
 
 <body>
+
+<%@ include file="/includes/loader.jspf" %>
 
 <div class="contenedor-admin">
 
@@ -63,11 +67,13 @@
                 </c:if>
 
                 <div class="grupo-input">
-                    <label>ID Usuario</label>
-                    <input type="number"
-                           name="txtIdUsuario"
-                           value="${contactoEditar.id_usuario}"
-                           required>
+                    <label for="txtIdUsuario">Usuario</label>
+                    <select id="txtIdUsuario" name="txtIdUsuario" required>
+                        <option value="">Seleccione un usuario</option>
+                        <c:forEach var="u" items="${listaUsuarios}">
+                            <option value="${u.id_usuario}" ${u.id_usuario == contactoEditar.id_usuario ? 'selected' : ''}>${u.nombre_completo} (${u.numero_documento})</option>
+                        </c:forEach>
+                    </select>
                 </div>
 
                 <div class="grupo-input">
@@ -125,7 +131,7 @@
 
                         <tr>
                             <td>${c.id_contacto}</td>
-                            <td>${c.id_usuario}</td>
+                            <td>${c.nombreUsuario}</td>
                             <td>${c.nombre_contacto}</td>
                             <td>${c.parentesco}</td>
                             <td>${c.telefono}</td>

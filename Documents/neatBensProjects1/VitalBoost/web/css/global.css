@@ -1,0 +1,1217 @@
+/* =====================================================================
+   VITALBOOST · GLOBAL.CSS
+   Sistema de diseño compartido por toda la aplicación.
+
+   IMPORTANTE: este archivo se enlaza SIEMPRE de último (después del CSS
+   propio de cada vista) para poder:
+     1) Unificar botones, enlaces y detalles visuales en todo el sitio.
+     2) Corregir en un solo lugar el comportamiento responsive de los
+        bloques que se repiten en varias vistas (sidebar, tablas,
+        formularios de administración, etc.)
+   No se tocan los colores de fondo ni tipografías propias de cada
+   página: solo se agregan utilidades nuevas y ajustes responsive.
+   ===================================================================== */
+
+:root {
+    --vb-azul-900: #0b1329;
+    --vb-azul-800: #0f172a;
+    --vb-azul-700: #1e3a8a;
+    --vb-azul-600: #1d4ed8;
+    --vb-azul-500: #2563eb;
+    --vb-azul-400: #3b82f6;
+    --vb-azul-100: #dbeafe;
+    --vb-azul-50:  #eff6ff;
+
+    --vb-blanco:   #ffffff;
+    --vb-gris-900: #111827;
+    --vb-gris-700: #374151;
+    --vb-gris-500: #6b7280;
+    --vb-gris-200: #e5e7eb;
+    --vb-gris-100: #f1f5f9;
+
+    --vb-rojo:        #dc2626;
+    --vb-rojo-hover:  #b91c1c;
+    --vb-verde:       #16a34a;
+
+    --vb-radius:    12px;
+    --vb-radius-lg: 18px;
+    --vb-sombra:    0 8px 24px rgba(15, 23, 42, 0.08);
+    --vb-sombra-lg: 0 16px 40px rgba(15, 23, 42, 0.16);
+
+    /* -----------------------------------------------------------------
+       PALETA "SALUD" — exclusiva del rol administrador. Verde/teal
+       clínico como acento principal, conservando el azul de marca
+       como color secundario para no romper la identidad VitalBoost.
+       ----------------------------------------------------------------- */
+    --adm-950: #052420;
+    --adm-900: #063a34;
+    --adm-800: #0a4a42;
+    --adm-700: #0d6b5f;
+    --adm-600: #0d9488;
+    --adm-500: #14b8a6;
+    --adm-400: #2dd4bf;
+    --adm-100: #ccfbf1;
+    --adm-50:  #f0fdfa;
+
+    --adm-bg:        #eef7f5;
+    --adm-superficie: #ffffff;
+    --adm-borde:      #dbeee9;
+    --adm-texto:      #0f2b26;
+    --adm-texto-sec:  #5b7b76;
+
+    --adm-radius:    16px;
+    --adm-radius-sm: 10px;
+    --adm-sombra:    0 10px 30px rgba(6, 58, 52, 0.08);
+    --adm-sombra-lg: 0 20px 45px rgba(6, 58, 52, 0.14);
+}
+
+/* =====================================================================
+   BASE SEGURA — evita que imágenes, tablas o iframes rompan el layout
+   en pantallas angostas. No afecta el diseño de escritorio.
+   ===================================================================== */
+
+img, svg, video, iframe, canvas {
+    max-width: 100%;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+:focus-visible {
+    outline: 3px solid var(--vb-azul-400);
+    outline-offset: 2px;
+}
+
+/* =====================================================================
+   SISTEMA DE BOTONES REUTILIZABLE
+   Úsalas en cualquier vista nueva: <a class="btn btn-primary">Texto</a>
+   ===================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: var(--vb-radius);
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    line-height: 1.2;
+}
+
+.btn-primary {
+    background: var(--vb-azul-500);
+    color: #fff;
+    box-shadow: var(--vb-sombra);
+}
+.btn-primary:hover { background: var(--vb-azul-600); transform: translateY(-2px); }
+
+.btn-outline {
+    background: #fff;
+    color: var(--vb-azul-500);
+    border-color: var(--vb-azul-500);
+}
+.btn-outline:hover { background: var(--vb-azul-500); color: #fff; }
+
+.btn-danger { background: var(--vb-rojo); color: #fff; }
+.btn-danger:hover { background: var(--vb-rojo-hover); }
+
+.btn-block { width: 100%; }
+
+/* =====================================================================
+   CORRECCIÓN DE ENLACES "SOLO TEXTO"
+   Estos enlaces actuaban como acciones (volver, cancelar, registrarse,
+   ver lista) pero se veían como simple texto azul/gris. Ahora se ven
+   y se sienten como botones reales en toda la aplicación.
+   ===================================================================== */
+
+.back-link,
+.cancel-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 2px solid var(--vb-gris-200);
+    border-radius: var(--vb-radius);
+    color: var(--vb-gris-700);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    background: #fff;
+    transition: all 0.25s ease;
+}
+.back-link:hover,
+.cancel-link:hover,
+.back-link:focus,
+.cancel-link:focus {
+    border-color: var(--vb-azul-500);
+    color: var(--vb-azul-500);
+    background: var(--vb-azul-50);
+    text-decoration: none !important;
+}
+
+.back-link svg,
+.cancel-link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.25s ease;
+}
+
+.back-link:hover svg,
+.cancel-link:hover svg {
+    transform: translateX(-3px);
+}
+
+/* Variante para colocar el enlace "volver" ARRIBA de una tarjeta
+   (login, registro) en vez de abajo, sin afectar los usos existentes
+   de .back-link (ej. buscarpaciente.jsp). Se ve como un chip discreto:
+   sin caja blanca ni borde grueso, mucho más pequeño que el
+   .back-link normal, ya que aquí acompaña al título en vez de actuar
+   como botón principal de la tarjeta. */
+.back-link-top,
+.back-link-top:link,
+.back-link-top:visited {
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding: 6px 12px 6px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    background: var(--vb-azul-50);
+    color: var(--vb-azul-600);
+}
+
+.back-link-top:hover,
+.back-link-top:focus {
+    background: var(--vb-azul-100);
+    color: var(--vb-azul-600);
+}
+
+.back-link-top svg,
+.back-link-top:hover svg {
+    width: 12px;
+    height: 12px;
+}
+
+.footer-link a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 22px;
+    border: 2px solid var(--vb-azul-500);
+    border-radius: var(--vb-radius);
+    color: var(--vb-azul-500);
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+.footer-link a:hover {
+    background: var(--vb-azul-500);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Tarjeta "VER LISTA" del dashboard del paciente */
+.card a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: var(--vb-azul-500);
+    color: #fff;
+    border-radius: var(--vb-radius);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+.card a:hover { background: var(--vb-azul-600); }
+
+
+ 
+
+body:has(.contenedor-admin) {
+    background:
+        radial-gradient(circle at 12% -8%, var(--adm-100) 0%, transparent 42%),
+        radial-gradient(circle at 100% 0%, var(--vb-azul-50) 0%, transparent 38%),
+        var(--adm-bg);
+    color: var(--adm-texto);
+    font-family: 'Segoe UI', 'Inter', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.contenedor-admin {
+    display: flex;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+/* ---------------------------------------------------------------------
+   SIDEBAR
+--------------------------------------------------------------------- */
+
+.sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, var(--adm-950) 0%, var(--adm-900) 55%, var(--adm-800) 100%);
+    padding: 26px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-shadow: 4px 0 24px rgba(5, 36, 32, 0.18);
+    border-right: none;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 6px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--adm-500), var(--adm-600));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(20, 184, 166, 0.35);
+}
+
+.brand-icon svg { width: 20px; height: 20px; }
+
+.brand-text {
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.15;
+}
+
+.brand-text strong { color: var(--adm-400); font-weight: 800; }
+
+.sidebar-tag {
+    display: block;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    margin-top: -12px;
+    padding: 0 6px 4px;
+}
+
+/* Logo simple heredado (fallback si alguna vista no usa .sidebar-brand) */
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    color: #ffffff;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.62);
+    padding: 12px 14px;
+    border-radius: var(--adm-radius-sm);
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: all 0.22s ease;
+    position: relative;
+    border-left: 3px solid transparent;
+}
+
+.menu-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+.menu-icon svg { width: 18px; height: 18px; }
+
+.menu a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    transform: translateX(2px);
+}
+
+.menu .activo,
+.menu a.activo {
+    background: linear-gradient(120deg, var(--adm-600), var(--adm-500));
+    color: #ffffff;
+    font-weight: 700;
+    border-left-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(13, 148, 136, 0.35);
+}
+
+.sidebar-footer {
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: var(--adm-radius-sm);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-profile .avatar-mini {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--adm-400), var(--vb-azul-500));
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.sidebar-profile .perfil-info { min-width: 0; }
+.sidebar-profile .perfil-nombre {
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-profile .perfil-rol {
+    color: var(--adm-400);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.menu-logout,
+a.menu-logout {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fecaca;
+    text-decoration: none;
+    padding: 11px 14px;
+    border-radius: var(--adm-radius-sm);
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.22s ease;
+    background: rgba(220, 38, 38, 0.12);
+}
+.menu-logout:hover { background: var(--vb-rojo); color: #fff; }
+
+/* ---------------------------------------------------------------------
+   CONTENIDO PRINCIPAL
+--------------------------------------------------------------------- */
+
+.contenido {
+    flex: 1;
+    padding: 32px 40px 56px;
+    min-width: 0;
+}
+
+.franja-salud {
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--adm-600), var(--adm-500), var(--vb-azul-500));
+    margin-bottom: 22px;
+    opacity: 0.85;
+}
+
+/* ---------------------------------------------------------------------
+   TOPBAR (dashboard admin)
+--------------------------------------------------------------------- */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    background: var(--adm-superficie);
+    border: 1px solid var(--adm-borde);
+    border-radius: var(--adm-radius);
+    padding: 20px 26px;
+    margin-bottom: 26px;
+    box-shadow: var(--adm-sombra);
+}
+
+.topbar h1 {
+    color: var(--adm-texto);
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.subtitulo {
+    color: var(--adm-texto-sec);
+    font-size: 0.92rem;
+    margin-top: 4px;
+}
+
+.usuario-admin {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: right;
+}
+
+.usuario-admin span {
+    display: block;
+    color: var(--adm-texto-sec);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.usuario-admin strong {
+    display: block;
+    color: var(--adm-texto);
+    font-size: 0.98rem;
+    font-weight: 800;
+}
+
+.admin-avatar {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--adm-600), var(--vb-azul-500));
+    color: #fff;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    box-shadow: 0 8px 18px rgba(13, 148, 136, 0.3);
+}
+
+.rol-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--adm-100);
+    color: var(--adm-700);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+.rol-chip svg { width: 12px; height: 12px; }
+
+/* ---------------------------------------------------------------------
+   TARJETAS / KPIs
+--------------------------------------------------------------------- */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 26px;
+}
+
+.card {
+    background: var(--adm-superficie);
+    border: 1px solid var(--adm-borde);
+    border-radius: var(--adm-radius);
+    padding: 22px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--adm-sombra);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--adm-500), var(--vb-azul-500));
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--adm-sombra-lg);
+}
+
+.card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--adm-50);
+    color: var(--adm-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+.card-icon svg { width: 20px; height: 20px; }
+
+.card h3 {
+    color: var(--adm-texto-sec);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--adm-texto);
+}
+
+/* ---------------------------------------------------------------------
+   PERFIL DE ADMINISTRADOR (tarjeta ampliada)
+--------------------------------------------------------------------- */
+
+.perfil-admin-card {
+    background: linear-gradient(120deg, var(--adm-900) 0%, var(--adm-700) 60%, var(--adm-600) 100%);
+    border-radius: var(--adm-radius);
+    padding: 26px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    color: #fff;
+    box-shadow: var(--adm-sombra-lg);
+    margin-bottom: 26px;
+    position: relative;
+    overflow: hidden;
+}
+
+.perfil-admin-card::after {
+    content: "";
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    width: 240px;
+    height: 240px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+}
+
+.perfil-admin-izq {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+}
+
+.perfil-admin-avatar {
+    flex-shrink: 0;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.perfil-admin-datos h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
+}
+
+.perfil-admin-datos .perfil-admin-shield {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+.perfil-admin-shield svg { width: 12px; height: 12px; }
+
+.perfil-admin-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.perfil-admin-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.perfil-admin-meta svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+.perfil-admin-der {
+    position: relative;
+    z-index: 1;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.perfil-admin-der small {
+    display: block;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.perfil-admin-der strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-top: 2px;
+}
+
+/* ---------------------------------------------------------------------
+   TABLAS
+--------------------------------------------------------------------- */
+
+.tabla-contenedor,
+.tabla-roles {
+    background: var(--adm-superficie);
+    border: 1px solid var(--adm-borde);
+    border-radius: var(--adm-radius);
+    padding: 24px;
+    box-shadow: var(--adm-sombra);
+}
+
+.tabla-roles { margin-top: 26px; }
+.tabla-roles h2,
+.tabla-header h2 {
+    color: var(--adm-texto);
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+
+.tabla-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+.tabla-header h2 { margin-bottom: 4px; }
+
+.descripcion-tabla {
+    color: var(--adm-texto-sec);
+    font-size: 0.85rem;
+}
+
+.tabla-responsive { overflow-x: auto; }
+
+.tabla-contenedor table,
+.tabla-roles table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-contenedor th,
+.tabla-roles th {
+    text-align: left;
+    color: var(--adm-texto-sec);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--adm-borde);
+    white-space: nowrap;
+}
+
+.tabla-contenedor td,
+.tabla-roles td {
+    padding: 14px;
+    border-bottom: 1px solid var(--adm-borde);
+    color: var(--adm-texto);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.tabla-contenedor tbody tr,
+.tabla-roles tbody tr { transition: background 0.15s ease; }
+.tabla-contenedor tbody tr:hover,
+.tabla-roles tbody tr:hover { background: var(--adm-50); }
+
+.sin-registros {
+    text-align: center;
+    color: var(--adm-texto-sec);
+    font-style: italic;
+    padding: 26px !important;
+}
+
+/* Botón "+ Nuevo" / acción principal de tabla */
+.btn-agregar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(120deg, var(--adm-600), var(--adm-500));
+    color: #ffffff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--adm-radius-sm);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 18px rgba(13, 148, 136, 0.28);
+}
+.btn-agregar:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(13, 148, 136, 0.36); }
+
+/* Acciones de fila */
+.acciones {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.acciones a,
+a.btn-perfil,
+a.btn-editar,
+a.btn-eliminar {
+    text-decoration: none;
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-perfil { background: var(--vb-azul-50); color: var(--vb-azul-600); }
+.btn-perfil:hover { background: var(--vb-azul-500); color: #fff; }
+
+.btn-editar { background: var(--adm-50); color: var(--adm-700); }
+.btn-editar:hover { background: var(--adm-500); color: #fff; }
+
+.btn-eliminar { background: #fef2f2; color: var(--vb-rojo); }
+.btn-eliminar:hover { background: var(--vb-rojo); color: #fff; }
+
+.badge-activo,
+.badge-inactivo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+.badge-activo::before,
+.badge-inactivo::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+.badge-activo { background: #dcfce7; color: #15803d; }
+.badge-activo::before { background: #16a34a; }
+.badge-inactivo { background: var(--vb-gris-100); color: var(--vb-gris-500); }
+.badge-inactivo::before { background: var(--vb-gris-500); }
+
+/* ---------------------------------------------------------------------
+   FORMULARIOS DE ADMINISTRACIÓN
+   (registrarusuario, registrarRol,
+    registrarcontactoemergencia,
+    registrartipodocumento, registrartiposangre)
+--------------------------------------------------------------------- */
+
+.contenedor-formulario,
+.form-contenedor {
+    width: 100%;
+}
+
+.card-formulario,
+.form-contenedor {
+    background: var(--adm-superficie);
+    border: 1px solid var(--adm-borde);
+    border-radius: var(--adm-radius);
+    padding: 30px 34px;
+    box-shadow: var(--adm-sombra);
+    margin-bottom: 26px;
+}
+
+.card-formulario h1,
+.form-contenedor h1 {
+    color: var(--adm-texto);
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--adm-borde);
+}
+
+.card-formulario form,
+.form-contenedor form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 6px 22px;
+    align-items: start;
+}
+
+.grupo-formulario,
+.grupo-input {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-formulario label,
+.grupo-input label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--adm-texto-sec);
+    margin-bottom: 7px;
+}
+.grupo-formulario label::before,
+.grupo-input label::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--adm-500);
+    flex-shrink: 0;
+}
+
+.grupo-formulario input,
+.grupo-formulario select,
+.grupo-formulario textarea,
+.grupo-input input,
+.grupo-input select,
+.grupo-input textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--adm-borde);
+    border-radius: var(--adm-radius-sm);
+    font-size: 0.92rem;
+    font-family: inherit;
+    color: var(--adm-texto);
+    background: #fbfdfd;
+    transition: all 0.2s ease;
+}
+
+.grupo-formulario input:focus,
+.grupo-formulario select:focus,
+.grupo-formulario textarea:focus,
+.grupo-input input:focus,
+.grupo-input select:focus,
+.grupo-input textarea:focus {
+    outline: none;
+    border-color: var(--adm-500);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.14);
+}
+
+.grupo-formulario textarea,
+.grupo-input textarea { resize: vertical; min-height: 90px; }
+
+.contenedor-botones {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.card-formulario form > button,
+.form-contenedor form > button.btn-agregar,
+.card-formulario form > .btn-agregar {
+    grid-column: 1 / -1;
+    justify-self: start;
+}
+
+.btn-guardar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(120deg, var(--adm-600), var(--adm-500));
+    color: #fff;
+    border: none;
+    padding: 13px 26px;
+    border-radius: var(--adm-radius-sm);
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 18px rgba(13, 148, 136, 0.28);
+}
+.btn-guardar:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(13, 148, 136, 0.36); }
+
+.btn-cancelar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    color: var(--adm-texto-sec);
+    border: 2px solid var(--adm-borde);
+    padding: 11px 24px;
+    border-radius: var(--adm-radius-sm);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+.btn-cancelar:hover { border-color: var(--vb-gris-500); color: var(--adm-texto); }
+
+.mensaje-exito,
+.mensaje-error {
+    grid-column: 1 / -1;
+    padding: 13px 16px;
+    border-radius: var(--adm-radius-sm);
+    font-weight: 700;
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+}
+.mensaje-exito { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.mensaje-error { background: #fef2f2; color: var(--vb-rojo); border: 1px solid #fecaca; }
+
+/* =====================================================================
+   RESPONSIVE — PANEL DE ADMINISTRACIÓN
+   Aplica a todas las vistas que usan el layout de sidebar
+   (dashboardAdmin, configuracion, registrarRol, registrarusuario,
+   registrarcontactoemergencia,
+   registrartipodocumento, registrartiposangre).
+   ===================================================================== */
+
+@media (max-width: 1024px) {
+
+    .sidebar { width: 220px; }
+    .contenido { padding: 28px 26px 50px; }
+}
+
+@media (max-width: 900px) {
+
+    body { overflow-x: hidden; }
+
+    .contenedor-admin {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: auto;
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        overflow-x: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        white-space: nowrap;
+    }
+
+    .sidebar-brand {
+        border-bottom: none;
+        padding: 0;
+        flex-shrink: 0;
+    }
+    .sidebar-tag { display: none; }
+
+    .sidebar .logo {
+        margin-bottom: 0;
+        padding: 0;
+        font-size: 18px;
+        white-space: nowrap;
+        border-bottom: none;
+    }
+
+    .menu {
+        flex-direction: row;
+        gap: 6px;
+        flex: none;
+    }
+
+    .menu a {
+        padding: 9px 14px;
+        margin: 0;
+        font-size: 13px;
+        white-space: nowrap;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+    }
+    .menu .activo, .menu a.activo { border-left: none; border-bottom-color: #fff; }
+
+    .sidebar-footer {
+        flex-direction: row;
+        border-top: none;
+        padding-top: 0;
+        flex-shrink: 0;
+    }
+    .sidebar-profile { display: none; }
+    .menu-logout { white-space: nowrap; }
+
+    .contenido {
+        padding: 20px;
+    }
+
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .perfil-admin-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .perfil-admin-der { text-align: left; }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tabla-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .tabla-header .btn-agregar {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        display: flex;
+    }
+
+    .tabla-contenedor,
+    .tabla-roles,
+    .tabla-responsive {
+        overflow-x: auto;
+    }
+
+    .tabla-roles table,
+    .tabla-contenedor table {
+        min-width: 640px;
+    }
+
+    .card-formulario,
+    .form-contenedor {
+        padding: 28px 20px;
+        border-radius: var(--vb-radius-lg);
+    }
+
+    .card-formulario h1,
+    .form-contenedor h1 {
+        font-size: 28px;
+        margin-bottom: 24px;
+    }
+
+    .card-formulario form,
+    .form-contenedor form {
+        grid-template-columns: 1fr;
+    }
+
+    .contenedor-formulario {
+        max-width: 100%;
+    }
+
+    .acciones {
+        flex-wrap: wrap;
+    }
+
+    .usuario-admin {
+        text-align: left;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .grupo-formulario input,
+    .grupo-formulario textarea,
+    .grupo-input input,
+    .grupo-input textarea {
+        padding: 14px;
+        font-size: 15px;
+    }
+
+    .btn-guardar,
+    .btn-agregar {
+        font-size: 16px;
+        padding: 14px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .card-formulario,
+    .form-contenedor {
+        padding: 22px 16px;
+    }
+
+    .card-formulario h1,
+    .form-contenedor h1 {
+        font-size: 24px;
+    }
+
+    .perfil-admin-avatar { width: 54px; height: 54px; font-size: 1.2rem; }
+    .perfil-admin-datos h2 { font-size: 1.05rem; }
+    .admin-avatar { width: 40px; height: 40px; }
+}

@@ -13,7 +13,10 @@ public class Usuario {
     private String password;
     private String fecha_nacimiento;
     private String alergias_conocidas;
+    private String eps;
+    private String medicamentos_actuales;
     private String fecha_registro;
+    private int activo = 1;
 
     // =========================
     // CAMPOS EXTRA PARA JOINS
@@ -107,12 +110,36 @@ public class Usuario {
         this.alergias_conocidas = alergias_conocidas;
     }
 
+    public String getEps() {
+        return eps;
+    }
+
+    public void setEps(String eps) {
+        this.eps = eps;
+    }
+
+    public String getMedicamentos_actuales() {
+        return medicamentos_actuales;
+    }
+
+    public void setMedicamentos_actuales(String medicamentos_actuales) {
+        this.medicamentos_actuales = medicamentos_actuales;
+    }
+
     public String getFecha_registro() {
         return fecha_registro;
     }
 
     public void setFecha_registro(String fecha_registro) {
         this.fecha_registro = fecha_registro;
+    }
+
+    public int getActivo() {
+        return activo;
+    }
+
+    public void setActivo(int activo) {
+        this.activo = activo;
     }
 
     // =========================

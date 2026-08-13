@@ -1,6 +1,9 @@
 package Servlets;
 
 import Controlador.UsuarioDAO;
+import Controlador.RolesDAO;
+import Controlador.Tipo_DocumentoDAO;
+import Controlador.Tipo_sangreDAO;
 import Modelo.Usuario;
 
 import java.io.IOException;
@@ -15,6 +18,9 @@ import jakarta.servlet.http.HttpServletResponse;
 public class Servletregistrarusuario extends HttpServlet {
 
     private final UsuarioDAO dao = new UsuarioDAO();
+    private final RolesDAO rolesDao = new RolesDAO();
+    private final Tipo_DocumentoDAO tipoDocumentoDao = new Tipo_DocumentoDAO();
+    private final Tipo_sangreDAO tipoSangreDao = new Tipo_sangreDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +40,7 @@ public class Servletregistrarusuario extends HttpServlet {
         else if ("eliminar".equals(accion)) {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
-                dao.eliminar(id);
+                dao.desactivar(id);
                 response.sendRedirect(request.getContextPath() + "/Servletregistrarusuario?msg=eliminado");
                 return;
             } catch (Exception e) {
@@ -45,6 +51,9 @@ public class Servletregistrarusuario extends HttpServlet {
         }
 
         request.setAttribute("lista", dao.listar());
+        request.setAttribute("listaRoles", rolesDao.listar());
+        request.setAttribute("listaTiposDocumento", tipoDocumentoDao.listar());
+        request.setAttribute("listaTiposSangre", tipoSangreDao.listar());
         request.getRequestDispatcher("/vistas/registrarusuario.jsp").forward(request, response);
     }
 

@@ -1,6 +1,7 @@
 package Servlets;
 
 import Controlador.ContactoEmergenciaDAO;
+import Controlador.UsuarioDAO;
 import Modelo.ContactoEmergencia;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class Servletregistrarcontactoemergencia extends HttpServlet {
 
     ContactoEmergenciaDAO dao = new ContactoEmergenciaDAO();
+    UsuarioDAO usuarioDao = new UsuarioDAO();
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -30,6 +32,7 @@ public class Servletregistrarcontactoemergencia extends HttpServlet {
         if (accion == null || accion.equals("listar")) {
 
             request.setAttribute("listaContactos", dao.listar());
+            request.setAttribute("listaUsuarios", usuarioDao.listar());
 
             request.getRequestDispatcher("/vistas/registrarcontactoemergencia.jsp")
                     .forward(request, response);
@@ -44,6 +47,7 @@ public class Servletregistrarcontactoemergencia extends HttpServlet {
 
             request.setAttribute("contactoEditar", c);
             request.setAttribute("listaContactos", dao.listar());
+            request.setAttribute("listaUsuarios", usuarioDao.listar());
 
             request.getRequestDispatcher("/vistas/registrarcontactoemergencia.jsp")
                     .forward(request, response);

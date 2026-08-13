@@ -50,13 +50,33 @@ public class ServletregistrarRol extends HttpServlet {
 
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
-                dao.eliminar(id);
+                int resultado = dao.eliminar(id);
+
+                if (resultado == -1) {
+                    // Hay usuarios usando este rol: no se puede eliminar
+                    request.setAttribute("mensajeError",
+                            "No se puede eliminar este rol porque hay usuarios asignados a él. "
+                            + "Reasigna esos usuarios a otro rol antes de eliminarlo.");
+                } else if (resultado == -2) {
+                    request.setAttribute("mensajeError",
+                            "Ocurrió un error al intentar eliminar el rol. Intenta nuevamente.");
+                } else if (resultado == 0) {
+                    request.setAttribute("mensajeError",
+                            "El rol que intentas eliminar ya no existe.");
+                } else {
+                    request.setAttribute("mensajeExito", "Rol eliminado correctamente.");
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
+                request.setAttribute("mensajeError",
+                        "Ocurrió un error inesperado al intentar eliminar el rol.");
             }
 
-            response.sendRedirect(request.getContextPath() 
-                    + "/ServletregistrarRol?accion=listar");
+            request.setAttribute("listaRoles", dao.listar());
+
+            request.getRequestDispatcher("/vistas/registrarRol.jsp")
+                    .forward(request, response);
         }
     }
 

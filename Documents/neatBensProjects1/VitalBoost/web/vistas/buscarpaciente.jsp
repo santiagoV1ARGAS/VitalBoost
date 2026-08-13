@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -12,8 +12,11 @@
     
     <%-- Vinculación al CSS externo --%>
     <link rel="stylesheet" href="${ctx}/css/buscarpaciente.css">
+    <link rel="stylesheet" href="${ctx}/css/global.css">
 </head>
 <body>
+
+<%@ include file="/includes/loader.jspf" %>
 
 <div class="search-card">
     <h2>Módulo de Emergencia</h2>

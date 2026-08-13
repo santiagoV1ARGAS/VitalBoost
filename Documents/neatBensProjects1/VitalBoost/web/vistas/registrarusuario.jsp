@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -8,6 +8,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         <c:choose>
             <c:when test="${not empty usuarioEdit}">Editar Usuario</c:when>
@@ -15,9 +16,12 @@
         </c:choose>
     </title>
     <link rel="stylesheet" href="${ctx}/css/registrarusuario.css">
+    <link rel="stylesheet" href="${ctx}/css/global.css">
 </head>
 
 <body>
+
+<%@ include file="/includes/loader.jspf" %>
 
 <div class="contenedor-admin">
 
@@ -68,22 +72,37 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <!-- ID ROL -->
+                    <!-- ROL -->
                     <div class="grupo-formulario">
-                        <label for="txtIdRol">ID Rol</label>
-                        <input type="number" id="txtIdRol" name="txtIdRol" value="${usuarioEdit.id_rol}" required>
+                        <label for="txtIdRol">Rol</label>
+                        <select id="txtIdRol" name="txtIdRol" required>
+                            <option value="">Seleccione un rol</option>
+                            <c:forEach var="rol" items="${listaRoles}">
+                                <option value="${rol.id_rol}" ${rol.id_rol == usuarioEdit.id_rol ? 'selected' : ''}>${rol.nombre_rol}</option>
+                            </c:forEach>
+                        </select>
                     </div>
 
-                    <!-- ID TIPO DOCUMENTO -->
+                    <!-- TIPO DOCUMENTO -->
                     <div class="grupo-formulario">
-                        <label for="txtIdTipoDocumento">ID Tipo Documento</label>
-                        <input type="number" id="txtIdTipoDocumento" name="txtIdTipoDocumento" value="${usuarioEdit.id_tipo_documento}" required>
+                        <label for="txtIdTipoDocumento">Tipo de Documento</label>
+                        <select id="txtIdTipoDocumento" name="txtIdTipoDocumento" required>
+                            <option value="">Seleccione un tipo de documento</option>
+                            <c:forEach var="td" items="${listaTiposDocumento}">
+                                <option value="${td.id_tipo_documento}" ${td.id_tipo_documento == usuarioEdit.id_tipo_documento ? 'selected' : ''}>${td.descripcion_tipo_documento}</option>
+                            </c:forEach>
+                        </select>
                     </div>
 
-                    <!-- ID TIPO SANGRE -->
+                    <!-- TIPO SANGRE -->
                     <div class="grupo-formulario">
-                        <label for="txtIdTipoSangre">ID Tipo Sangre</label>
-                        <input type="number" id="txtIdTipoSangre" name="txtIdTipoSangre" value="${usuarioEdit.id_tipo_sangre}" required>
+                        <label for="txtIdTipoSangre">Tipo de Sangre</label>
+                        <select id="txtIdTipoSangre" name="txtIdTipoSangre" required>
+                            <option value="">Seleccione un tipo de sangre</option>
+                            <c:forEach var="ts" items="${listaTiposSangre}">
+                                <option value="${ts.id_tipo_sangre}" ${ts.id_tipo_sangre == usuarioEdit.id_tipo_sangre ? 'selected' : ''}>${ts.nombre_tipo}</option>
+                            </c:forEach>
+                        </select>
                     </div>
 
                     <!-- NUMERO DOCUMENTO -->
